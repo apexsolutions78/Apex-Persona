@@ -1,0 +1,52 @@
+name: MVP checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  mysql-api:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: apex_persona
+          MYSQL_USER: apex_persona
+          MYSQL_PASSWORD: test_password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    defaults:
+      run:
+        working-directory: mvp
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mvp/package-lock.json
+      - run: npm ci
+      - run: npm run db:setup
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_NAME: apex_persona
+          DB_USER: apex_persona
+          DB_PASSWORD: test_password
+      - run: npm test
+        env:
+          RUN_MYSQL_INTEGRATION: '1'
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_NAME: apex_persona
+          DB_USER: apex_persona
+          DB_PASSWORD: test_password
