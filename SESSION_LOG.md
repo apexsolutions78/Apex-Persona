@@ -12,9 +12,9 @@ Implementation decisions are based on the three planning documents at the reposi
 
 **Local checks:** `npm test` — 10 passed, 0 failed, 1 MySQL integration test skipped because this workstation has no accessible MySQL service. `node --check` passed for all 11 JavaScript source and test files. Dependency install completed with 0 reported vulnerabilities.
 
-**Status: OPEN — MySQL integration pending.** Do not start milestone 2 until the MySQL-backed workflow installs the schema and passes the API integration test. The checkpoint is published to `main` at `https://github.com/apexsolutions78/Apex-Persona`. The connected GitHub tools report no commit status checks yet and do not expose push-triggered workflow runs, so the MySQL integration result is not verified. No application data or credentials are stored in Git.
+**Status: COMPLETE.** GitHub Actions run [#15](https://github.com/apexsolutions78/Apex-Persona/actions/runs/36875225868) completed successfully on 2026-10-01. The MySQL 8 service started, dependencies installed, guarded schema setup passed, and `npm test` passed with the MySQL integration enabled. The `mysql-api` job and all listed steps succeeded. No application data or credentials are stored in Git.
 
-**Next checks:** Run the repository workflow against MySQL 8; verify schema creation, persona creation, 10-query plan creation, query approval, retrieval of the run, and health check before beginning document ingestion.
+**Next:** Begin milestone 2 — bounded document ingestion, normalization, durable file storage, and provenance records. Gate the milestone on hostile-URL protections, file size/type limits, deduplication, parser failure handling, and MySQL integration tests.
 
 ## Deployment notes
 
@@ -27,5 +27,5 @@ Implementation decisions are based on the three planning documents at the reposi
 
 ## Git state
 
-The supplied GitHub remote is connected and the full milestone 1 checkpoint has been published to `main`. The local CLI cannot update this checkout's `.git` metadata due to filesystem permissions; GitHub API commits are present remotely. The repository remains ready for server-side `git pull` over SSH.
+The supplied GitHub remote is connected and the full milestone 1 checkpoint has been published to `main`. MySQL integration passed in GitHub Actions run #15. The local CLI cannot update this checkout's `.git` metadata due to filesystem permissions; GitHub API commits are present remotely. The repository remains ready for server-side `git pull` over SSH.
 
