@@ -1,0 +1,22 @@
+{
+  "name": "apex-persona-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Evidence-first persona learning API",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "db:setup": "node src/db/setup.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mysql2": "^3.11.5",
+    "pdf-parse": "^1.1.1",
+    "turndown": "^7.2.0"
+  }
+}
